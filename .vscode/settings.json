@@ -2,6 +2,8 @@
     "C_Cpp.errorSquiggles": "Disabled",
     "files.associations": {
         "*.vhd": "vhdl",
-        "iostream": "cpp"
+        "iostream": "cpp",
+        "ostream": "cpp",
+        "xutility": "cpp"
     }
 }
