@@ -1,3 +1,13 @@
+/**
+ * @file StackArrayOperationsADT.cpp
+ * @author Shantanu Mane (@RndmCodeGuy20) (shantanu.mane.200@outlook.com)
+ * @brief 
+ * @version  420.69
+ * @date 2021-12-08
+ * 
+ * @copyright Copyright (c) 2021
+ * 
+ */
 #include <iostream>
 using namespace std;
 
