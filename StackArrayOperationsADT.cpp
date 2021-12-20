@@ -66,15 +66,12 @@ void pop(struct stackArray *stackArray)
 {
     if (!isEmpty(stackArray))
     {
-        // stackArray->tempEl = stackArray[stackArray->top];
         cout << stackArray->stackArrayPtr[stackArray->top] << endl;
         stackArray->top = stackArray->top - 1;
-        // return stackArray->tempEl;
     }
     else
     {
         cout << "\nStack is empty! Add some elements!💀\n";
-        // return -1;
     }
 }
 
@@ -104,11 +101,13 @@ int main()
             Empty = isEmpty(&stackArr);
             if (Empty == 1)
             {
-                cout << "Stack is empty!!! Push items to the stack!!!\n" << endl;
+                cout << "Stack is empty!!! Push items to the stack!!!\n"
+                     << endl;
             }
             else
             {
-                cout << "Stack has some elements, consider checking if the stack is full or not!!!\n" << endl;
+                cout << "Stack has some elements, consider checking if the stack is full or not!!!\n"
+                     << endl;
             }
             break;
 
@@ -116,11 +115,13 @@ int main()
             Full = isFull(&stackArr);
             if (Full == 1)
             {
-                cout << "Stack is Full!!! Pop items from the stack!!!\n" << endl;
+                cout << "Stack is Full!!! Pop items from the stack!!!\n"
+                     << endl;
             }
             else
             {
-                cout << "Stack has some elements, consider checking if the stack is empty or not!!!\n" << endl;
+                cout << "Stack has some elements, consider checking if the stack is empty or not!!!\n"
+                     << endl;
             }
             break;
 
