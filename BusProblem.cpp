@@ -1,9 +1,47 @@
+/**
+ * @file BusProblem.cpp
+ * @author Shantanu Mane (@RndmCodeGuy20) (shantanu.mane.200@outlook.com)
+ * @brief
+ *
+ * `Capacity -> 30
+ * ` 2 doors
+ * ` 1 entry
+ * ` 2 exits
+ * ` passengers can occupy seats in rear
+ * ` passengers can exit in first come first serve basis
+ * ` once bus is full alarms goes off
+ *
+ * - Front |    |     |     |     |     |     | .... |    | Rear
+ * -------------------------------------------------
+ * -       | 0  |  1  |  2  |  3  |  4  |  5  | ....   29
+ *
+ * - Front |    |     |     |     |     |     | .... |    | Rear
+ * -------------------------------------------------
+ * -       | 12 | 13  | 14  |  15 |  16 |  17 | ....   29
+ *                      👆 insert from middle
+ *                      👆 midfront
+ *                              👆 midRear
+ *
+ * $ Data Structure used -> Modified Queue
+ *
+ * $ Operations possible :-
+ * - Insert from middle onto front part
+ * - Insert from middle onto rear part
+ * - Delete from right
+ * - Delete from left
+ *
+ * @version  1.0.4
+ * @date 2022-01-04
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include <iostream>
 using namespace std;
 
-#define MAX_CAP 5
+#define MAX_CAP 30
 int busQueue[MAX_CAP];
-int front = -1, rear = -1;
+int front = -1, rear = MAX_CAP, midF = -1, midR = MAX_CAP;
 
 void insertRear()
 {
@@ -12,33 +50,56 @@ void insertRear()
     cout << "\nEnter passenger you want to add : " << endl;
     cin >> inputVal;
 
-    if (rear == MAX_CAP - 1)
+    if (midR == MAX_CAP / 2 - 1)
     {
-        cout << "☢️ No seats left!!! ☢️";
+        cout << "☢️ No seats left in rear!!! ☢️";
     }
-    else if (front == -1 && rear == -1)
+    else if (midR == MAX_CAP && rear == MAX_CAP)
     {
-        front = rear = 0;
+        midR = rear = MAX_CAP - 1;
     }
     else
     {
-        rear++;
+        midR--;
     }
 
-    busQueue[rear] = inputVal;
+    busQueue[midR] = inputVal;
+}
+
+void insertFront()
+{
+    int inputVal;
+
+    cout << "\nEnter passenger you want to add : " << endl;
+    cin >> inputVal;
+
+    if (midF == MAX_CAP / 2 - 1)
+    {
+        cout << "☢️ No seats left in front!!! ☢️";
+    }
+    else if (midF == -1 && front == -1)
+    {
+        front = midF = 0;
+    }
+    else
+    {
+        midF++;
+    }
+
+    busQueue[midF] = inputVal;
 }
 
 void deleteFront()
 {
     if (front == -1)
     {
-        cout << "☢️ No seats occupied!!! ☢️";
+        cout << "☢️ No seats occupied in front!!! ☢️";
     }
     cout << "\nPassenger exitting from front end is : " << busQueue[front] << endl;
-    if (front == rear) //! If the element removed from ^ is the last element condition
+    if (front == midF) //! If the element removed from ^ is the last element condition
     {
         front = -1;
-        rear = -1;
+        midF = -1;
     }
     else
     {
@@ -55,19 +116,19 @@ void deleteFront()
 
 void deleteRear()
 {
-    if (rear == -1)
+    if (midR == MAX_CAP)
     {
         cout << "☢️ No seats occupied!!! ☢️";
     }
     cout << "\nPassenger exitting from rear end is : " << busQueue[rear] << endl;
-    if (rear == front)
+    if (rear == midR)
     {
-        rear = -1;
-        front = -1;
+        rear = MAX_CAP;
+        midR = MAX_CAP;
     }
     else
     {
-        if (rear == 0)
+        if (rear == MAX_CAP / 2 - 1)
         {
             rear = MAX_CAP - 1;
         }
@@ -87,54 +148,18 @@ void displayBus()
 
     cout << "\nOccupied seats are : " << endl;
 
-    if (front <= rear)
+    while (front <= midF)
     {
-        while (front <= rear)
-        {
-            cout << busQueue[front] << endl;
-            front++;
-        }
+        cout << busQueue[front] << endl;
+        front++;
     }
-    else
+
+    while (rear >= MAX_CAP / 2 - 1)
     {
-        while (front <= MAX_CAP - 1)
-        {
-            cout << busQueue[front] << endl;
-            front++;
-        }
-        front = 0;
-        while (front <= rear)
-        {
-            cout << busQueue[front] << endl;
-            front++;
-        }
+        cout << busQueue[rear] << endl;
+        rear--;
     }
 }
-
-/**
- * @brief
- *
- * `Capacity -> 30
- * ` 2 doors
- * ` 1 entry
- * ` 2 exits
- * ` passengers can occupy seats in rear
- * ` passengers can exit in first come first serve basis
- * ` once bus is full alarms goes off
- *
- * - Front |    |     |     |     |     |     | .... |    | Rear
- * -------------------------------------------------
- * -       | 0  |  1  |  2  |  3  |  4  |  5  | ....   29
- *
- *
- * $ Data Structure used -> Input Restricted Dequeue
- *
- * $ Operations possible :-
- * - Insert Rear
- * - Delete from right
- * - Delete from left
- *
- */
 
 int main()
 {
@@ -142,11 +167,17 @@ int main()
 
     do
     {
-        cout << "1. Insert Element\n2. Delete from Front\n3. Delete from rear\n4. Display" << endl;
+        cout << "\n🚌🚎🚐🚎🚌 Welcome to Mane Travels 🚌🚎🚐🚎🚌\n"
+             << endl;
+        cout << "0. Insert Element in Front\n1. Insert Element in Rear\n2. Delete from Front\n3. Delete from rear\n4. Display\nEnter your choice : ";
         cin >> choice;
 
         switch (choice)
         {
+        case 0:
+            insertFront();
+            break;
+
         case 1:
             insertRear();
             break;
@@ -167,16 +198,6 @@ int main()
             break;
         }
     } while (choice != 5);
-
-    // insertRear();
-    // insertRear();
-    // insertRear();
-    // insertRear();
-
-    // deleteFront();
-    // deleteRear();
-
-    // displayBus();
 
     return 0;
 }
