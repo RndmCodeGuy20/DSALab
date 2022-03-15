@@ -1,3 +1,14 @@
+/**
+ * @file PolynomialAdd.cpp
+ * @author Shantanu Mane (@RndmCodeGuy20) (shantanu.mane.200@outlook.com)
+ * @brief Program to add two polynomials using Linked List.
+ * @version  1.0.3
+ * @date 2022-01-18
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #include <iostream>
 using namespace std;
 
